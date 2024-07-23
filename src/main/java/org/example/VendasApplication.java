@@ -1,39 +1,32 @@
 package org.example;
 
+
+
+import org.example.model.CLIENTE;
+import org.example.repositoy.Clientes;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"org.example.repository",
-                               "org.example.service"})
-@RestController
 public class VendasApplication {
 
-    @Value("${application.name}")
-    private String ApplicationName;
-
-    @Autowired
-    private Animal animal;
-
     @Bean
-    public CommandLineRunner executar(){
+    public CommandLineRunner init(@Autowired Clientes clientes){
+
         return args -> {
-            this.animal.fazerBarulho();
+            CLIENTE cliente = new CLIENTE();
+            cliente.setNome("pedro");
+            clientes.salvar(cliente);
+
+            List<CLIENTE> TodosClientes = clientes.obterTodos();
+            TodosClientes.forEach(System.out::println);
         };
-    }
-
-
-    @GetMapping("/hello")
-    public String helloWorld(){
-        return ApplicationName ;
     }
 
     public static void main(String[] args) {
