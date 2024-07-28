@@ -18,9 +18,10 @@ public class CLIENTE {
     public CLIENTE() {
     }
 
-    public CLIENTE(String nome, Long id) {
-        this.nome = nome;
+    public CLIENTE(Long id, String nome)  {
         this.id = id;
+        this.nome = nome;
+
     }
 
     public CLIENTE(String nome) {
