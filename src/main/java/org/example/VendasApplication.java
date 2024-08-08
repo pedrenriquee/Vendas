@@ -1,7 +1,6 @@
 package org.example;
 
 
-
 import org.example.model.CLIENTE;
 import org.example.repositoy.Clientes;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +22,21 @@ public class VendasApplication {
             clientes.inserir(new CLIENTE("pedro"));
             clientes.inserir(new CLIENTE("henrique"));
 
-            List<CLIENTE> todosCliente = clientes.obterTodos();
+          List<CLIENTE> todosCliente = clientes.obterTodos();
             todosCliente.forEach(System.out::println);
 
-            todosCliente.forEach(c ->{
-                c.setNome(c.getNome() + " atualizado");
+              todosCliente.forEach(c ->{
+                c.setNome(c.getNome() + " new");
                 clientes.atualizar(c);
             });
 
             todosCliente = clientes.obterTodos();
             todosCliente.forEach(System.out::println);
 
-            //bug
-           // System.out.println("Buscando clientes");
-           // clientes.buscarPorNome("henri").forEach(System.out::println);
+
+           /* todosCliente.forEach(c ->{
+           System.out.println("Buscando clientes");
+            clientes.buscarPorNome("e").forEach(System.out::println);}); */
 
             System.out.println("deletando clientes");
             clientes.obterTodos().forEach(c -> {

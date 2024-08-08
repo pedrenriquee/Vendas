@@ -1,64 +1,61 @@
 package org.example.repositoy;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import org.example.model.CLIENTE;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 import java.util.List;
 
 
 @Repository
 public class Clientes {
 
-   private static String INSERT = "insert into CLIENTE (nome) values (?)";
-   private static String SELECT_ALL = "SELECT * FROM CLIENTE";
-   private static String UPDATE = "update CLIENTE set nome = ? where id = ?";
-   private static String DELETE = "delete from CLIENTE where id = ?";
-
   @Autowired
-  private  JdbcTemplate jdbcTemplate;
+  private EntityManager entityManager;
+
+  @Transactional
   public CLIENTE inserir(CLIENTE cliente){
-      jdbcTemplate.update(INSERT, new Object[]{cliente.getNome()});
+      entityManager.persist(cliente);
       return cliente;
   }
-
+  @Transactional
   public CLIENTE atualizar(CLIENTE cliente){
-      jdbcTemplate.update(UPDATE, new Object[]{cliente.getNome(), cliente.getId()} );
+      entityManager.merge(cliente);
       return cliente;
   }
 
+  @Transactional
   public void deletar(CLIENTE cliente){
-      deletar(cliente.getId());
-  }
+     if(!entityManager.contains(cliente)){
+         cliente = entityManager.merge(cliente);
+     }
 
+     entityManager.remove(cliente);
+  }
+  @Transactional
   public void deletar( Long id){
-      jdbcTemplate.update(DELETE, new Object[]{id});
+     CLIENTE cliente= entityManager.find(CLIENTE.class, id);
+     deletar(cliente);
   }
 
+  @Transactional(readOnly = true)
   public List<CLIENTE> buscarPorNome(String nome){
-      return  jdbcTemplate.query(SELECT_ALL.concat(
-              "where nome like ?"), new Object[]{"%"+ nome + "%"}, obterCLIENTEMapper());
+      String jpql = " select c from CLIENTE c where c.nome like = :nome ";
+     TypedQuery<CLIENTE> query = entityManager.createQuery(jpql, CLIENTE.class);
+      query.setParameter("nome", "%" + nome +"%");
+      return query.getResultList();
   }
 
-
+  @Transactional(readOnly = true)
   public List<CLIENTE> obterTodos(){
-      return jdbcTemplate.query(SELECT_ALL, obterCLIENTEMapper());
+      return entityManager.
+              createQuery("from CLIENTE", CLIENTE.class)
+              .getResultList();
   }
-
-    private static RowMapper<CLIENTE> obterCLIENTEMapper() {
-        return new RowMapper<CLIENTE>() {
-            @Override
-            public CLIENTE mapRow(ResultSet resultSet, int i) throws SQLException {
-                Long id = resultSet.getLong("id");
-                String nome = resultSet.getString("nome");
-                return new CLIENTE(id, nome);
-            }
-        };
-    }
 
 
 }
