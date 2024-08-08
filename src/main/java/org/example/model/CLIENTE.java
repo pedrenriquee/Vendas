@@ -25,15 +25,18 @@ public class CLIENTE {
     }
 
     public CLIENTE(String nome) {
+
         this.nome = nome;
     }
 
     // Getters e Setters
     public Long getId() {
+
         return id;
     }
 
     public void setId(Long id) {
+
         this.id = id;
     }
 
