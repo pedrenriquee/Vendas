@@ -3,6 +3,8 @@ package org.example.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "CLIENTE")
 public class CLIENTE {
@@ -15,7 +17,20 @@ public class CLIENTE {
     @Column(name ="nome", length = 100)
     private String nome;
 
+
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+    private Set<PEDIDO> pedidos;
+
+
     public CLIENTE() {
+    }
+
+    public Set<PEDIDO> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<PEDIDO> pedidos) {
+        this.pedidos = pedidos;
     }
 
     public CLIENTE(Long id, String nome)  {

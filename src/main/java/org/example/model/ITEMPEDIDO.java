@@ -1,9 +1,26 @@
 package org.example.model;
 
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="item_pedido")
 public class ITEMPEDIDO {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="id")
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name="pedido_id")
     private PEDIDO pedido;
+
+    @ManyToOne
+    @JoinColumn(name="produto_id")
     private PRODUTO produto;
+
+    @Column(name = "quantidade")
     private Integer quantidade;
 
     public Integer getId() {

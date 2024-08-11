@@ -19,8 +19,9 @@ public class VendasApplication {
     public CommandLineRunner init(@Autowired Clientes clientes){
 
         return args -> {
-            clientes.save(new CLIENTE("pedro"));
-            clientes.save(new CLIENTE("henrique"));
+           CLIENTE fulano = new CLIENTE("pedro");
+           clientes.save(fulano);
+
 
           List<CLIENTE> todosCliente = clientes.findAll();
             todosCliente.forEach(System.out::println);
