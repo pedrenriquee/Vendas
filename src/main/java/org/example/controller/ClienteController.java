@@ -5,13 +5,13 @@ import org.example.repositoy.Clientes;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
+@RequestMapping("/api/clientes")
 public class ClienteController {
 
     private Clientes clientes;
@@ -20,26 +20,23 @@ public class ClienteController {
         this.clientes = clientes;
     }
 
-    @GetMapping("api/clientes/{id}")
-    @ResponseBody
+    @GetMapping("{id}")
     public ResponseEntity getClienteById(@PathVariable Long id){
        Optional<CLIENTE> cliente = clientes.findById(id);
 
        if(cliente.isPresent()){
            return ResponseEntity.ok( cliente.get() );
        }
-
        return ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/api/clientes")
-    @ResponseBody
+    @PostMapping
     public ResponseEntity save(@RequestBody CLIENTE cliente){
        CLIENTE clienteSalvo = clientes.save(cliente);
        return ResponseEntity.ok(clienteSalvo);
     }
 
-    @DeleteMapping("/api/clientes/{id}")
+    @DeleteMapping("{id}")
     public ResponseEntity delete(@PathVariable Long id){
         Optional<CLIENTE> cliente= clientes.findById(id);
 
@@ -51,8 +48,7 @@ public class ClienteController {
 
     }
 
-    @PutMapping("/api/clientes/{id}")
-    @ResponseBody
+    @PutMapping("{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody CLIENTE cliente){
         return clientes.findById(id).map(clienteExistente ->{
             cliente.setId(clienteExistente.getId());
@@ -61,7 +57,7 @@ public class ClienteController {
         }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/api/clientes")
+    @GetMapping
     public ResponseEntity find(CLIENTE filtro){
 
         ExampleMatcher matcher = ExampleMatcher.matching()
