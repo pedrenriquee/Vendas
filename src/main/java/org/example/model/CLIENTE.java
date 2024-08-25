@@ -1,6 +1,7 @@
 package org.example.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -17,7 +18,10 @@ public class CLIENTE {
     @Column(name ="nome", length = 100)
     private String nome;
 
+    @Column(name="cpf", length = 11)
+    private String cpf;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<PEDIDO> pedidos;
 
@@ -61,6 +65,14 @@ public class CLIENTE {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     @Override
