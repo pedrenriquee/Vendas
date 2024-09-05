@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name="produto")
+@Table(name="PRODUTO")
 public class PRODUTO {
 
     @Id
@@ -18,6 +18,7 @@ public class PRODUTO {
     @Column(name="preco_unitario")
     private BigDecimal preco;
 
+
     public Integer getId() {
         return id;
     }
@@ -26,19 +27,19 @@ public class PRODUTO {
         this.id = id;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
     public BigDecimal getPreco() {
         return preco;
     }
 
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 }
