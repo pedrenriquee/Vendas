@@ -3,9 +3,15 @@ package org.example.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "CLIENTE")
 public class CLIENTE {
@@ -26,61 +32,10 @@ public class CLIENTE {
     private Set<PEDIDO> pedidos;
 
 
-    public CLIENTE() {
-    }
-
-    public Set<PEDIDO> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(Set<PEDIDO> pedidos) {
-        this.pedidos = pedidos;
-    }
-
     public CLIENTE(Long id, String nome)  {
         this.id = id;
         this.nome = nome;
-
     }
 
-    public CLIENTE(String nome) {
-
-        this.nome = nome;
-    }
-
-    // Getters e Setters
-    public Long getId() {
-
-        return id;
-    }
-
-    public void setId(Long id) {
-
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    @Override
-    public String toString() {
-        return "CLIENTE{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                '}';
-    }
 }
 
