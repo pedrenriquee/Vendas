@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
 import org.example.model.CLIENTE;
 import org.example.repositoy.Clientes;
 import org.springframework.data.domain.Example;
@@ -33,7 +34,7 @@ public class ClienteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CLIENTE save(@RequestBody CLIENTE cliente){
+    public CLIENTE save(@RequestBody @Valid CLIENTE cliente){
        return clientes.save(cliente);
     }
 
@@ -49,7 +50,7 @@ public class ClienteController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Long id, @RequestBody CLIENTE cliente){
+    public void update(@PathVariable Long id, @RequestBody @Valid CLIENTE cliente){
          clientes.findById(id).map(clienteExistente ->{
             cliente.setId(clienteExistente.getId());
                 clientes.save(cliente);

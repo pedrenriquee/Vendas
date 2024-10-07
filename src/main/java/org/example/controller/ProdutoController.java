@@ -1,5 +1,6 @@
 package org.example.controller;
 
+import jakarta.validation.Valid;
 import org.example.model.CLIENTE;
 import org.example.model.PRODUTO;
 import org.example.repositoy.Produtos;
@@ -23,13 +24,13 @@ public class ProdutoController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PRODUTO salvar(@RequestBody PRODUTO produto){
+    public PRODUTO salvar(@RequestBody @Valid PRODUTO produto){
         return produtos.save(produto);
     }
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@PathVariable Integer id, @RequestBody PRODUTO produto){
+    public void update(@PathVariable Integer id, @RequestBody @Valid PRODUTO produto){
 
         produtos.findById(id).map(p -> {
             produto.setId(produto.getId());
