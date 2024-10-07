@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PedidoDTO {
-    @NotNull(message = "Campo Cliente é obrigatório.")
+    @NotNull(message = "{campo.codigo-cliente.obrigatorio}")
     private Long cliente;
     @NotNull(message = "Campo Total é obrigatório.")
     private BigDecimal total;
